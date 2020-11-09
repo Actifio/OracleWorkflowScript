@@ -53,8 +53,8 @@ echo "$oraclecommand"
 su -m $username -c "$oraclecommand"
 }
 
-# this part of the script ensures we run the SQL script during a mount after the DB is mounted
-if [ "$ACT_MULTI_OPNAME" == "mount" ] && [ "$ACT_MULTI_END" == "true" ] && [ "$ACT_PHASE" == "post" ]; then
+# this part of the script ensures we run the SQL script during a mount after the DB is mounted, but NOT if this is a remount
+if [ "$ACT_MULTI_OPNAME" == "mount" ] && [ "$ACT_MULTI_END" == "true" ] && [ "$ACT_PHASE" == "post" ] && [ -z "$ACT_MOUNT_REMOUNT" ]; then
         workflowfunc
         exit $?
 fi
